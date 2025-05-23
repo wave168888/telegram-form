@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ส่งข้อมูลไป Telegram</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background-image: url('room.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: white; /* สีตัวอักษรทั้งหมด */
+  }
+
+  .form-container {
+    background: rgba(0, 0, 0, 0.6); /* กล่องโปร่งแสง */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(255,255,255,0.2);
+    width: 300px;
+  }
+
+  h2 {
+    text-align: center;
+    color: #fff;
+    margin-bottom: 20px;
+  }
+
+  label {
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 5px;
+    color: #fff; /* สีข้อความ label */
+  }
+
+  input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc; /* กรอบช่อง */
+    border-radius: 5px;
+    margin-bottom: 10px;
+  }
+
+  button {
+    width: 100%;
+    padding: 10px;
+    background-color: #28a745;
+    border: none;
+    color: white;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  button:hover {
+    background-color: #218838;
+  }
+
+@media (max-width: 480px) {
+  .form-container {
+    width: 90%;
+    padding: 20px;
+  }
+
+  input, button {
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 20px;
+  }
+}
+</style>
+</head>
+<body>
+ <div class="form-container">
+ <img src="logo.png" alt="โลโก้" style="display: block; margin: 0 auto 20px; max-width: 150px;">
+  <h2>แบบฟอร์มสมัครพาร์เนอร์</h2>
+  <form id="form">
+    <label>ชื่อ-นามสกุล:</label>
+    <input type="text" id="name" required>
+
+    <label>เบอร์โทร:</label>
+    <input type="text" id="phone" required>
+
+    <label>ไลน์ไอดี:</label>
+    <input type="text" id="line" required>
+
+    <label>เลขบัญชี:</label>
+    <input type="text" id="account" required>
+
+    <label>ธนาคาร:</label>
+    <input type="text" id="bank" required>
+
+    <button type="submit">ส่งข้อมูล</button>
+  </form>
+</div>
+</body>
+  <script>
+    const BOT_TOKEN = "8051814479:AAFW47OlUQ8m4NyxFudciy7dWeB0qrCw0pI";
+    const CHAT_ID = "-1002508445233";
+
+    document.getElementById("form").addEventListener("submit", function(e) {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value;
+      const phone = document.getElementById("phone").value;
+      const line = document.getElementById("line").value;
+      const account = document.getElementById("account").value;
+      const bank = document.getElementById("bank").value;
+
+      const fullMessage = `ชื่อ-นามสกุล: ${name}\nเบอร์โทร: ${phone}\nไลน์ไอดี: ${line}\nเลขบัญชี: ${account}\nธนาคาร: ${bank}`;
+      const url = `https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(fullMessage)}`;
+
+      fetch(url)
+        .then(response => {
+          if (response.ok) {
+            alert("ส่งข้อมูลเรียบร้อยแล้ว");
+            document.getElementById("form").reset();
+          } else {
+            alert("เกิดข้อผิดพลาด");
+          }
+        });
+    });
+  </script>
+</body>
+</html>
