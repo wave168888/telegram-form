@@ -76,22 +76,56 @@
   h2 {
     font-size: 20px;
   }
+}
 .line-button {
   display: block;
-  text-align: center;
+  margin: 20px auto 0;
+  padding: 10px 20px;
   background-color: #00c300;
   color: white;
-  padding: 10px;
-  margin-top: 10px;
-  text-decoration: none;
-  border-radius: 5px;
   font-weight: bold;
+  text-align: center;
+  border: none;
+  border-radius: 5px;
+  text-decoration: none;
+  font-size: 16px;
+  transition: background-color 0.3s;
 }
 
 .line-button:hover {
-  background-color: #009f00;
+  background-color: #009e00;
 }
-</style>
+.popup {
+  display: none;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #28a745;
+  color: white;
+  padding: 20px 30px;
+  border-radius: 10px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  font-size: 18px;
+  z-index: 1000;
+}
+  .admin-link {
+  display: inline-block;
+  margin-top: 15px;
+  padding: 10px 20px;
+  background-color: #343a40;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 5px;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  text-align: center;
+}
+
+.admin-link:hover {
+  background-color: #23272b;
+}
+  </style>
 </head>
 <body>
  <div class="form-container">
@@ -115,7 +149,19 @@
 
     <button type="submit">ส่งข้อมูล</button>
   </form>
-   <a href="https://line.me/R/ti/p/~@hrwave168" target="_blank" class="line-button">ติดต่อผ่าน LINE</a>
+ <!-- ปุ่มทางเข้าหลังบ้าน -->
+<div style="text-align: center;">
+  <a href="https://bo.g-power.live/SaleDashboard/login" target="_blank" class="admin-link">ทางเข้าหลังบ้าน</a>
+</div>
+
+<!-- กล่องแจ้งเตือนสำเร็จ -->
+<div id="success-message" class="popup">
+  ส่งข้อมูลเรียบร้อย ขอบคุณที่กรอกแบบฟอร์ม!
+</div>
+
+<!-- ปุ่มติดต่อ LINE -->
+<div style="text-align: center;">
+  <a href="https://line.me/R/ti/p/~@hrwave168" target="_blank" class="line-button">ติดต่อผ่าน LINE</a>
 </div>
 </body>
   <script>
@@ -137,9 +183,13 @@
       fetch(url)
         .then(response => {
           if (response.ok) {
-            alert("ส่งข้อมูลเรียบร้อยแล้ว");
-            document.getElementById("form").reset();
-          } else {
+  document.getElementById("form").reset();
+  const successBox = document.getElementById("success-message");
+  successBox.style.display = "block";
+  setTimeout(() => {
+    successBox.style.display = "none";
+  }, 3000);
+} else {
             alert("เกิดข้อผิดพลาด");
           }
         });
